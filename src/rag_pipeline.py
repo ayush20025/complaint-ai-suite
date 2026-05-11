@@ -192,8 +192,9 @@ class AdvancedRAGComplaintAnalyzer:
                 if not is_valid:
                     raise ValueError(message)
                 merged_entities = sorted(set(fallback.detected_entities + sanitized.get("detected_entities", [])))
+                final_payload = {key: value for key, value in sanitized.items() if key not in {"detected_entities", "reasoning"}}
                 return ComplaintAnalysis(
-                    **sanitized,
+                    **final_payload,
                     detected_entities=merged_entities,
                     reasoning=sanitized.get("reasoning") or fallback.reasoning,
                     analysis_mode="hybrid-rag-llm",

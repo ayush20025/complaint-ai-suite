@@ -5,6 +5,24 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
+try:
+    import streamlit as st
+except Exception:  # pragma: no cover - streamlit may be unavailable in some utility contexts
+    st = None
+
+
+def _secret_or_env(name: str, default: str = "") -> str:
+    value = os.getenv(name, "").strip()
+    if value:
+        return value
+    if st is not None:
+        try:
+            secret_value = st.secrets.get(name, default)
+            return str(secret_value).strip()
+        except Exception:
+            return default
+    return default
+
 PROJECT_ROOT = Path(__file__).resolve().parent
 APP_DIR = PROJECT_ROOT / "app"
 DATA_DIR = PROJECT_ROOT / "data"
@@ -21,9 +39,9 @@ ML_CLASSIFIER_PATH = MODELS_DIR / "ml_classifier.pkl"
 EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", "sentence-transformers/all-MiniLM-L6-v2")
 USE_SENTENCE_TRANSFORMER = os.getenv("USE_SENTENCE_TRANSFORMER", "false").strip().lower() == "true"
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-EMBEDDED_GEMINI_API_KEY = os.getenv("EMBEDDED_GEMINI_API_KEY", GEMINI_API_KEY)
+OPENAI_API_KEY = _secret_or_env("OPENAI_API_KEY")
+GEMINI_API_KEY = _secret_or_env("GEMINI_API_KEY")
+EMBEDDED_GEMINI_API_KEY = _secret_or_env("EMBEDDED_GEMINI_API_KEY", GEMINI_API_KEY)
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "auto").strip().lower()
 OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "").strip()
 MODEL_NAME = os.getenv("MODEL_NAME", "gpt-4o-mini")
