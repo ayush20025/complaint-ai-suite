@@ -1,4 +1,4 @@
-﻿# Complaint AI System
+# Complaint AI System
 
 ## Overview
 This upgraded MSc-level project converts free-text complaints into structured, explainable complaint intelligence with three competing pipelines:
@@ -38,7 +38,7 @@ Raw vs handwritten:
 - Analytics charts using matplotlib and seaborn
 - Multi-page Streamlit dashboard with lazy-loaded heavy pages
 - Model comparison using grouped holdout evaluation, accuracy, precision, recall, and F1 score
-- Gemini on/off toggle with built-in API key option for multimodal LLM analysis
+- Gemini on/off toggle with vision support for multimodal LLM analysis
 - Text + image complaint analysis on the analyzer page
 - 50,000-row complaint warehouse for major-project experimentation
 - Handwritten validation set for stronger academic credibility
