@@ -17,11 +17,11 @@ from config import ALLOWED_DEPARTMENTS, ALLOWED_PRIORITIES, CFPB_DATA_PATH, OUTP
 PRIORITY_RANK = {"Low": 1, "Medium": 2, "High": 3, "Critical": 4}
 ENTITY_VOCAB = {
     "billing": ["invoice", "payment", "refund", "charge", "subscription", "billing"],
-    "logistics": ["delivery", "shipment", "courier", "warehouse", "package", "tracking", "arrived", "dispatch"],
+    "logistics": ["delivery", "shipment", "courier", "warehouse", "package", "tracking", "arrived", "dispatch", "replacement", "pickup"],
     "technical": ["app", "website", "server", "login", "api", "bug", "crash", "error"],
     "service": ["support", "agent", "response", "service", "callback", "ticket"],
     "urgency": ["urgent", "asap", "immediately", "escalate", "critical"],
-    "product": ["product", "item", "device", "order", "replacement", "screen", "damage", "damaged", "broken"],
+    "product": ["product", "item", "device", "order", "replacement", "screen", "damage", "damaged", "broken", "glass", "shattered", "cracked", "fractured", "dented", "smashed"],
 }
 
 

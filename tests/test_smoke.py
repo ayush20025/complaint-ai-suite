@@ -198,7 +198,7 @@ class ComplaintAISmokeTests(unittest.TestCase):
         self.assertTrue({"complaint_text", "true_department", "true_priority", "true_core_issue"}.issubset(self.validation.columns))
 
     def test_main_and_cfpb_datasets_are_scaled(self) -> None:
-        self.assertGreaterEqual(len(self.dataset), 50_000)
+        self.assertGreaterEqual(len(self.dataset), 150_000)
         self.assertGreaterEqual(len(self.cfpb), 2_500)
         self.assertTrue({"product", "consumer_complaint_narrative", "complaint_text", "true_department"}.issubset(self.cfpb.columns))
 

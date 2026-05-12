@@ -72,7 +72,9 @@ class AdvancedRAGComplaintAnalyzer:
             "Extract the complaint details visible in this customer-provided image. "
             "Return a short plain-text complaint summary covering the product or service, "
             "the problem, and any urgency. If the image shows physical damage, explicitly say whether it looks like "
-            "a damaged product, damaged shipment, broken screen, shattered glass, or packaging damage. "
+            "a damaged product, damaged shipment, broken screen, shattered glass, cracked item, dented product, or packaging damage. "
+            "For visible broken or shattered product photos from shopping or delivery complaints, strongly prefer wording like "
+            "'damaged product', 'damaged shipment', 'shattered glass', 'cracked screen', or 'product arrived broken'. "
             "Write it as complaint text that downstream classifiers can use. Do not return JSON."
         )
         if complaint_text.strip():
@@ -120,7 +122,7 @@ class AdvancedRAGComplaintAnalyzer:
                 }
             )
         return [
-            {"role": "system", "content": PROMPT_TEMPLATE + " Use only allowed departments Billing, Logistics, Technical Support, Customer Service and priorities Low, Medium, High, Critical."},
+            {"role": "system", "content": PROMPT_TEMPLATE + " Use only allowed departments Billing, Logistics, Technical Support, Customer Service and priorities Low, Medium, High, Critical. If the complaint or image describes broken, cracked, shattered, dented, or physically damaged delivered products, prefer Logistics with a damaged-product or damaged-shipment issue unless strong contrary evidence exists."},
             {"role": "user", "content": user_content},
         ]
 

@@ -24,7 +24,7 @@ cfpb_df = load_cfpb_dataset()
 render_header(
     "Complaint Analytics",
     "Explore complaint distributions, keyword trends, and unsupervised clustering patterns through a more polished research dashboard lens.",
-    chips=["50K raw warehouse", "5K handwritten validation", "CFPB-style external benchmark"],
+    chips=["150K raw warehouse", "5K handwritten validation", "CFPB-style external benchmark"],
 )
 
 k1, k2, k3 = st.columns(3)
@@ -38,7 +38,7 @@ with k3:
 st.write("")
 render_section_intro(
     "Dataset roles",
-    f"The 50K raw warehouse is the main training and retrieval corpus. The 5K handwritten validation set keeps the same label schema but uses more natural writing style for realism checks. The CFPB-style dataset is a separate external benchmark with product and narrative fields mapped into your internal departments. Current sizes: raw {len(dataset):,}, handwritten {len(validation_df):,}, CFPB-style {len(cfpb_df):,}.",
+    f"The 150K raw warehouse is the main training and retrieval corpus. The 5K handwritten validation set keeps the same label schema but uses more natural writing style for realism checks. The CFPB-style dataset is a separate external benchmark with product and narrative fields mapped into your internal departments. Current sizes: raw {len(dataset):,}, handwritten {len(validation_df):,}, CFPB-style {len(cfpb_df):,}.",
 )
 
 st.write("")

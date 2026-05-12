@@ -15,7 +15,7 @@ def _ensure_parent(path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
 
 
-def build_raw_rows(total_rows: int = 50_000, seed: int = 42) -> list[dict[str, object]]:
+def build_raw_rows(total_rows: int = 150_000, seed: int = 42) -> list[dict[str, object]]:
     rng = random.Random(seed)
     start_date = datetime(2024, 1, 1)
     rows: list[dict[str, object]] = []

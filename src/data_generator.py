@@ -89,6 +89,21 @@ ISSUE_TEMPLATES: tuple[IssueTemplate, ...] = (
         task_signals=("replacement shipment", "damage claim", "reverse pickup"),
     ),
     IssueTemplate(
+        issue="Damaged product",
+        department="Logistics",
+        priority="High",
+        product_lines=("Glassware", "Electronics", "Home Appliance", "Furniture", "Marketplace"),
+        channels=("Web", "Chat", "Phone", "Email"),
+        complaint_patterns=(
+            "The delivered {product_line} has shattered glass and multiple visible cracks, so the product is unusable.",
+            "I opened package {ticket} and found the product body dented, broken, and damaged right out of the box.",
+            "The item I received today has a smashed screen and physical damage even though I expected a new working product.",
+            "My {product_line} arrived with broken parts, cracked glass, and signs of impact damage on the product itself.",
+            "The product is damaged on arrival with chipped edges, fractured glass, and unsafe condition for use.",
+        ),
+        task_signals=("damaged product replacement", "product damage inspection", "courier and packaging review"),
+    ),
+    IssueTemplate(
         issue="Wrong item delivered",
         department="Logistics",
         priority="Medium",

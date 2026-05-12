@@ -16,8 +16,8 @@ The system outputs:
 - `reasoning`
 
 ## Data Setup
-- `data/raw/complaints.csv`: 50,000-row synthetic complaint warehouse used for training, retrieval, and large-scale analytics
-- `data/processed/cleaned_complaints.csv`: processed 50,000-row version with `cleaned_text`
+- `data/raw/complaints.csv`: 150,000-row synthetic complaint warehouse used for training, retrieval, and large-scale analytics
+- `data/processed/cleaned_complaints.csv`: processed 150,000-row version with `cleaned_text`
 - `data/validation/handwritten_complaints.csv`: 5,000-row handwritten-style validation set for more realistic language variation
 - `data/cfpb/consumer_complaints.csv`: separate CFPB-style benchmark dataset mapped to the project's four departments
 - `models/ml_classifier.pkl`: persisted ML classifier trained from the large dataset
@@ -40,7 +40,7 @@ Raw vs handwritten:
 - Model comparison using grouped holdout evaluation, accuracy, precision, recall, and F1 score
 - Gemini on/off toggle with vision support for multimodal LLM analysis
 - Text + image complaint analysis on the analyzer page
-- 50,000-row complaint warehouse for major-project experimentation
+- 150,000-row complaint warehouse for major-project experimentation
 - Handwritten validation set for stronger academic credibility
 - CFPB-style external benchmark page
 - Smoke-test suite for schema, rule-based, ML, and RAG execution
