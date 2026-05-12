@@ -2,9 +2,16 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
 import pandas as pd
 import streamlit as st
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.dashboard_utils import get_dataset, inject_css, render_header, render_lazy_action, render_metric_card, render_section_intro
 from src.ml_model import MLComplaintAnalyzer

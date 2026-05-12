@@ -2,7 +2,14 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
 import streamlit as st
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.dashboard_utils import get_comparison_artifacts, inject_css, render_header, render_metric_card, render_section_intro
 from src.model_comparison import ModelComparisonRunner
