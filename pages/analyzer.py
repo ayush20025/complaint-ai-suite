@@ -19,8 +19,8 @@ inject_css()
 dataset = get_dataset()
 render_header(
     "Complaint Analyzer",
-    "Run multi-step complaint analysis and compare rule-based, ML, and RAG outputs with reasoning, evidence, structured JSON, and optional multimodal LLM support.",
-    chips=["Head-to-head model view", "Gemini toggle", "Text + image input"],
+    "Run multi-step complaint analysis and compare rule-based, ML, and RAG outputs with reasoning, evidence, structured JSON, and multimodal complaint understanding.",
+    chips=["Head-to-head model view", "Gemini vision path", "Text + image input"],
 )
 
 samples = ["Custom complaint"] + sample_complaints(dataset)

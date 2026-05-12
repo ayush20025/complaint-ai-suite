@@ -22,8 +22,8 @@ def main() -> None:
 
     render_header(
         "Complaint-to-Action Intelligence Hub",
-        "Analyze complaints, compare model outputs, inspect similar cases, and benchmark the system from one dashboard.",
-        chips=[f"Warehouse {len(dataset):,} complaints", "3 model families", "CFPB benchmark included"],
+        "Analyze complaints, compare model outputs, inspect similar cases, and benchmark the system from a polished research operations console.",
+        chips=[f"Warehouse {len(dataset):,} complaints", "3 model families", "Multimodal complaint triage"],
     )
     st.write("")
 
@@ -40,7 +40,7 @@ def main() -> None:
     with left:
         render_section_intro(
             "Research-grade workflow",
-            "This interface is structured like a modern SaaS operations console: analysts can triage complaints, compare model outputs, inspect semantic neighbors, study distributional patterns, and review error cases from one workspace.",
+            "This interface is structured like a modern AI operations console: analysts can triage complaints, compare model outputs, inspect semantic neighbors, study distributional patterns, and review error cases from one coordinated workspace.",
         )
         st.write("")
         render_nav_cards([
@@ -53,7 +53,7 @@ def main() -> None:
     with right:
         render_section_intro(
             "Quick start",
-            "Use the sidebar pages to open the analyzer, analytics, model comparison, CFPB benchmark, similarity search, and error analysis views.",
+            "Use the sidebar pages to open the analyzer, analytics, model comparison, CFPB benchmark, similarity search, and error analysis views across phone, tablet, and laptop-friendly layouts.",
         )
         st.info("Heavy benchmark views open only when requested, so the landing page stays lighter than the analysis pages.")
 
