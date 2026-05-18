@@ -9,13 +9,18 @@ import pandas as pd
 import streamlit as st
 
 from config import EMBEDDED_GEMINI_API_KEY, GEMINI_OPENAI_BASE_URL
+from src.clustering import ComplaintClusterAnalyzer
 from src.model_comparison import ModelComparisonRunner
 from src.ml_model import MLComplaintAnalyzer
 from src.rag_pipeline import AdvancedRAGComplaintAnalyzer
 from src.rule_based_model import build_rule_based_analysis
 from src.schemas import ComplaintAnalysis
 from src.similarity_search import ComplaintSimilaritySearch
-from src.utils import load_dataset
+from src.utils import load_cfpb_dataset, load_dataset, load_validation_dataset
+
+COMPARISON_SAMPLE_SIZE = 6000
+CLUSTERING_SAMPLE_SIZE = 12000
+KEYWORD_SAMPLE_SIZE = 20000
 
 PRIORITY_CLASS = {
     "Low": "pill-low",
@@ -294,33 +299,64 @@ def get_dataset() -> pd.DataFrame:
     return load_dataset()
 
 
+@st.cache_data(show_spinner=False)
+def get_validation_data() -> pd.DataFrame:
+    return load_validation_dataset()
+
+
+@st.cache_data(show_spinner=False)
+def get_cfpb_data() -> pd.DataFrame:
+    return load_cfpb_dataset()
+
+
+@st.cache_data(show_spinner=False)
+def get_dataset_sample(sample_size: int, random_state: int = 42) -> pd.DataFrame:
+    dataset = get_dataset()
+    limit = min(len(dataset), sample_size)
+    if len(dataset) <= limit:
+        return dataset.copy()
+    return dataset.sample(n=limit, random_state=random_state).reset_index(drop=True)
+
+
 @st.cache_resource(show_spinner=False)
 def get_ml_model() -> MLComplaintAnalyzer:
-    return MLComplaintAnalyzer().fit(get_dataset())
+    return MLComplaintAnalyzer()
 
 
 @st.cache_resource(show_spinner=False)
 def get_similarity_engine() -> ComplaintSimilaritySearch:
-    return ComplaintSimilaritySearch(dataset=get_dataset())
+    return ComplaintSimilaritySearch()
 
 
 @st.cache_resource(show_spinner=False)
 def get_rag_model(use_embedded_key: bool = False) -> AdvancedRAGComplaintAnalyzer:
     if use_embedded_key:
         return AdvancedRAGComplaintAnalyzer(
-            knowledge_base=get_dataset(),
             enable_generation=True,
             provider="gemini",
             api_key=EMBEDDED_GEMINI_API_KEY,
             base_url=GEMINI_OPENAI_BASE_URL,
             model_name="gemini-2.5-flash",
         )
-    return AdvancedRAGComplaintAnalyzer(knowledge_base=get_dataset(), enable_generation=False)
+    return AdvancedRAGComplaintAnalyzer(enable_generation=False)
 
 
 @st.cache_data(show_spinner=False)
 def get_comparison_artifacts():
-    return ModelComparisonRunner().run(get_dataset())
+    return ModelComparisonRunner().run(get_dataset_sample(COMPARISON_SAMPLE_SIZE))
+
+
+@st.cache_data(show_spinner=False)
+def get_cluster_artifacts(cluster_count: int):
+    sample = get_dataset_sample(CLUSTERING_SAMPLE_SIZE, random_state=cluster_count + 42)
+    clusterer = ComplaintClusterAnalyzer(n_clusters=cluster_count)
+    artifacts = clusterer.fit_predict(sample)
+    return artifacts.summary, artifacts.assignments
+
+
+@st.cache_data(show_spinner=False)
+def get_keyword_dataset() -> pd.DataFrame:
+    return get_dataset_sample(KEYWORD_SAMPLE_SIZE)
 
 
 def render_lazy_action(button_label: str, key: str, help_text: str | None = None) -> bool:

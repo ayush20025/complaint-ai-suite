@@ -5,6 +5,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import matplotlib.pyplot as plt
 import streamlit as st
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -38,7 +39,9 @@ if render_lazy_action("Run grouped benchmark", "comparison_load_metrics", "Loads
     st.write("")
     render_section_intro("Performance overview", "The comparison table and chart below present the experimental position of each model family across the key evaluation criteria expected in an MSc AI project.")
     st.dataframe(artifacts.metrics, use_container_width=True, hide_index=True)
-    st.pyplot(ModelComparisonRunner.plot_metrics(artifacts.metrics), use_container_width=True)
+    fig = ModelComparisonRunner.plot_metrics(artifacts.metrics)
+    st.pyplot(fig, use_container_width=True)
+    plt.close(fig)
 
     st.write("")
     render_section_intro("Handwritten validation", "This smaller external validation slice is intentionally written by hand. It gives you a more realistic narrative for the report than the synthetic warehouse alone.")
@@ -48,6 +51,8 @@ if render_lazy_action("Run grouped benchmark", "comparison_load_metrics", "Loads
     render_section_intro("Error analysis", "Confusion matrices make it easier to discuss where each approach confuses departments and where retrieval or learned classification offers a measurable benefit.")
     for model_name, confusion_df in artifacts.confusion.items():
         st.markdown(f"### {model_name} Confusion Matrix")
-        st.pyplot(ModelComparisonRunner.plot_confusion(confusion_df, f"{model_name} Confusion Matrix"), use_container_width=True)
+        fig = ModelComparisonRunner.plot_confusion(confusion_df, f"{model_name} Confusion Matrix")
+        st.pyplot(fig, use_container_width=True)
+        plt.close(fig)
 else:
     st.info("Benchmark results will appear here after you run the grouped evaluation.")
